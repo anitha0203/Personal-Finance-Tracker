@@ -34,9 +34,6 @@ public class UserDetails {
 	@Column(name="email")
 	private String email;
 	
-	@Column(name="phone_number")
-	private String phoneNumber;
-	
 	@Column(name = "created_by")
 	private String createdBy;
 
@@ -95,14 +92,6 @@ public class UserDetails {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 
 	public String getCreatedBy() {

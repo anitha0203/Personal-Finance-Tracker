@@ -4,16 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.personalfinancetrackor.personalfinancetrackor.repository.EmailVerificationRepository;
-import com.personalfinancetrackor.personalfinancetrackor.repository.PhoneNumberVerificationRepository;
 
 @Service
 public class UserDetailsService
 		implements com.personalfinancetrackor.personalfinancetrackor.service.UserDetailsService {
 	@Autowired
 	EmailVerificationRepository emailVerificationRepository;
-
-	@Autowired
-	PhoneNumberVerificationRepository phoneNumberVerificationRepository;
 
 	@Override
 	public String emailVerification(String email) {
@@ -22,9 +18,8 @@ public class UserDetailsService
 	}
 
 	@Override
-	public String phoneNumberVerification(String phoneNumber) {
+	public String checkUser(String email, String pin) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

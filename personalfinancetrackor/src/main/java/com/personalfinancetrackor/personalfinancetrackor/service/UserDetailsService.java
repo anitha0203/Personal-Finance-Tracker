@@ -4,6 +4,6 @@ public interface UserDetailsService {
 	
 	public String emailVerification(String email);
 
-	public String phoneNumberVerification(String phoneNumber);
-
+	public String checkUser(String email, String pin);
+	
 }
