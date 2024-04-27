@@ -31,7 +31,9 @@ public class UserDetailsService
 	public String emailVerification(String email) {
 		if (ValidateInputs.isValidEmail(email)) {
 			Optional<UserDetails> checkEmail = userDetailsRepository.findByEmail(email);
-			if (checkEmail == null) {
+			System.out.println("email  " + checkEmail);
+			if (!checkEmail.isPresent()) {
+				System.out.println("email  df" + checkEmail);
 				String otp = String.valueOf(new Random().nextInt(900000) + 100000);
 				String subject = "Your OTP for Verification";
 				String body = "Your OTP is: " + otp;
@@ -39,13 +41,14 @@ public class UserDetailsService
 				addOtp(email, otp);
 				return otp;
 			} else {
+				System.out.println("emaildfd  " + checkEmail);
 				return "E-mail already exist";
 			}
 		} else {
 			return "Invalid E-mail address";
 		}
 	}
-	
+
 //	Storing the otp in db //storeOtpForVerification
 	public void addOtp(String email, String otp) {
 		Optional<EmailVerification> otpEntityOptional = emailVerificationRepository.findByEmail(email);
@@ -59,6 +62,27 @@ public class UserDetailsService
 			storeOtp.setOtp(otp);
 			storeOtp.setValidity(true);
 			emailVerificationRepository.save(storeOtp);
+		}
+	}
+
+//	Validating the otp
+	@Override
+	public String verifyOtp(String email, String otp) {
+		Optional<EmailVerification> otpEntityOptional = emailVerificationRepository.findByEmail(email);
+		if (otpEntityOptional.isPresent()) {
+			EmailVerification storedOtpEntity = otpEntityOptional.get();
+			String storedOtp = storedOtpEntity.getOtp();
+
+			// Check if the provided OTP matches the stored OTP
+			if (storedOtp.equals(otp)) {
+				emailVerificationRepository.delete(storedOtpEntity);
+
+				return "Successfully varified the Email";
+			} else {
+				throw new Error("Invalid OTP, Please enter the correct OTP");
+			}
+		} else {
+			throw new Error("Invalid E-Mail, Please check E-Mail");
 		}
 	}
 
