@@ -87,6 +87,31 @@ public class UserDetailsService
 	}
 
 	@Override
+	public String processUserRegistration(UserDetails userDetails) {
+		UserDetails userRegistration = new UserDetails();
+
+		// Set user details from the provided object
+		userRegistration.setFirstName(userDetails.getFirstName());
+		userRegistration.setLastName(userDetails.getLastName());
+		userRegistration.setOccupation(userDetails.getOccupation());
+		System.out.println("going" + userDetails.getAge());
+		userRegistration.setAge(userDetails.getAge());
+		userRegistration.setEmail(userDetails.getEmail());
+		userRegistration.setCreatedBy("admin");
+		userRegistration.setUpdatedBy("admin");
+
+		// Check if the email already exists in the database
+		Optional<UserDetails> existingUserByEmail = userDetailsRepository.findByEmail(userDetails.getEmail());
+		if (!existingUserByEmail.isPresent()) {
+				userDetailsRepository.save(userRegistration);
+				return "User details have been successfully added to the database.";
+		} else {
+			throw new Error("E-Mail already exists.");
+		}
+	}
+
+
+	@Override
 	public String checkUser(String email, String pin) {
 		if (ValidateInputs.isValidEmail(email) && ValidateInputs.isValidPin(pin)) {
 			Optional<UserDetails> checkEmail = userDetailsRepository.findByEmail(email);
