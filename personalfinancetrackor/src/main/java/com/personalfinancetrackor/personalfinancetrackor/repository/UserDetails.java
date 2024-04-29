@@ -29,7 +29,7 @@ public class UserDetails {
 	private String occupation;
 	
 	@Column(name="age")
-	private BigDecimal age;
+	private Integer age;
 	
 	@Column(name="email")
 	private String email;
@@ -78,11 +78,11 @@ public class UserDetails {
 		this.occupation = occupation;
 	}
 
-	public BigDecimal getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(BigDecimal age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 

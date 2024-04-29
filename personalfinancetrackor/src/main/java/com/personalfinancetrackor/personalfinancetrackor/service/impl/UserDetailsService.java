@@ -6,6 +6,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.personalfinancetrackor.personalfinancetrackor.model.User;
 import com.personalfinancetrackor.personalfinancetrackor.repository.EmailVerification;
 import com.personalfinancetrackor.personalfinancetrackor.repository.EmailVerificationRepository;
 import com.personalfinancetrackor.personalfinancetrackor.repository.UserDetails;
@@ -31,9 +32,7 @@ public class UserDetailsService
 	public String emailVerification(String email) {
 		if (ValidateInputs.isValidEmail(email)) {
 			Optional<UserDetails> checkEmail = userDetailsRepository.findByEmail(email);
-			System.out.println("email  " + checkEmail);
 			if (!checkEmail.isPresent()) {
-				System.out.println("email  df" + checkEmail);
 				String otp = String.valueOf(new Random().nextInt(900000) + 100000);
 				String subject = "Your OTP for Verification";
 				String body = "Your OTP is: " + otp;
@@ -41,7 +40,6 @@ public class UserDetailsService
 				addOtp(email, otp);
 				return otp;
 			} else {
-				System.out.println("emaildfd  " + checkEmail);
 				return "E-mail already exist";
 			}
 		} else {
@@ -87,14 +85,13 @@ public class UserDetailsService
 	}
 
 	@Override
-	public String processUserRegistration(UserDetails userDetails) {
+	public String processUserRegistration(User userDetails) {
 		UserDetails userRegistration = new UserDetails();
 
 		// Set user details from the provided object
 		userRegistration.setFirstName(userDetails.getFirstName());
 		userRegistration.setLastName(userDetails.getLastName());
 		userRegistration.setOccupation(userDetails.getOccupation());
-		System.out.println("going" + userDetails.getAge());
 		userRegistration.setAge(userDetails.getAge());
 		userRegistration.setEmail(userDetails.getEmail());
 		userRegistration.setCreatedBy("admin");

@@ -1,6 +1,6 @@
 package com.personalfinancetrackor.personalfinancetrackor.service;
 
-import com.personalfinancetrackor.personalfinancetrackor.repository.UserDetails;
+import com.personalfinancetrackor.personalfinancetrackor.model.User;
 
 public interface UserDetailsService {
 	
@@ -10,6 +10,6 @@ public interface UserDetailsService {
 
 	String verifyOtp(String phoneNumber, String otp);
 
-	String processUserRegistration(UserDetails userDetails);
+	String processUserRegistration(User userDetails);
 	
 }
